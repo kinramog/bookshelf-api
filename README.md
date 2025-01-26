@@ -14,7 +14,6 @@ API сервиса учёта книг для библиотеки.
 - GET api/authors — список авторов
 - GET api/authors/:authorId/books — получение книг по автору
 - GET api/books/search?title=example — поиск книг по вхождению строки в название (регистронезависимый)
-- GET api/authors/:id — конкретный автор с книгами
 
 Эндпоинты для удобства:
 - POST api/books - создание книги 
