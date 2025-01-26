@@ -15,9 +15,6 @@ export class Book {
   @Column({ length: 500 })
   title: string;
 
-  // @Column('int')
-  // authorId: number;
-
   @Column()
   genre: string;
 

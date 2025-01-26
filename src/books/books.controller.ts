@@ -6,23 +6,21 @@ import { CreateBookDto } from './dto/create-book.dto';
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
-  @Post()
-  create(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.create(createBookDto);
-  }
-
+  //Получение всех книг
   @Get()
   findAll() {
     return this.booksService.findAll();
   }
 
+  //Поиск книги по названию
   @Get('search')
   searchByTitle(@Query('title') title: string) {
     return this.booksService.searchByTitle(title);
   }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.booksService.remove(+id);
-  // }
+  //Создание книги
+  @Post()
+  create(@Body() createBookDto: CreateBookDto) {
+    return this.booksService.create(createBookDto);
+  }
 }

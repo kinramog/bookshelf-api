@@ -6,18 +6,21 @@ import { CreateAuthorDto } from './dto/create-author.dto';
 export class AuthorsController {
   constructor(private readonly authorsService: AuthorsService) {}
 
-  @Post()
-  create(@Body() createAuthorDto: CreateAuthorDto) {
-    return this.authorsService.create(createAuthorDto);
-  }
-
+  //Получение всех авторов
   @Get()
   findAll() {
     return this.authorsService.findAll();
   }
 
+  //Получение книг автора
   @Get(':id/books')
   findBooksByAuthor(@Param('id') id: string) {
     return this.authorsService.findBookByAuthor(+id);
+  }
+
+  //Создание автора
+  @Post()
+  create(@Body() createAuthorDto: CreateAuthorDto) {
+    return this.authorsService.create(createAuthorDto);
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Book } from './entities/book.entity';
-import { ILike, In, Like, Repository } from 'typeorm';
+import { ILike, In, Repository } from 'typeorm';
 import { Author } from 'src/authors/entities/author.entity';
 
 @Injectable()
@@ -12,6 +12,23 @@ export class BooksService {
     @InjectRepository(Author) private authorRepository: Repository<Author>,
   ) {}
 
+  //Получение всех книг
+  findAll() {
+    const books = this.booksRepository.find({
+      relations: ['authors'],
+    });
+    return books;
+  }
+
+  //Поиск книг по названию
+  async searchByTitle(title: string) {
+    const findedBooks = await this.booksRepository.findBy({
+      title: ILike(`%${title}%`),
+    });
+    return findedBooks.length > 0 ? findedBooks : 'Книги не найдены';
+  }
+
+  //Создание книги
   async create(createBookDto: CreateBookDto) {
     const { title, genre, year, authorIds } = createBookDto;
 
@@ -28,25 +45,4 @@ export class BooksService {
 
     return this.booksRepository.save(book);
   }
-
-  findAll() {
-    const books = this.booksRepository.find({
-      relations: ['authors'],
-    });
-    return books;
-  }
-
-  searchByTitle(title: string) {
-    return this.booksRepository.findBy({
-      title: ILike(`%${title}%`),
-    });
-  }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} book`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} book`;
-  // }
 }

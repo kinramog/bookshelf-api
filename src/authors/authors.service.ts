@@ -10,21 +10,25 @@ export class AuthorsService {
     @InjectRepository(Author) private authorsRepository: Repository<Author>,
   ) {}
 
+  //Создание автора в БД
   create(createAuthorDto: CreateAuthorDto) {
     const author = this.authorsRepository.create(createAuthorDto);
     return this.authorsRepository.save(author);
   }
 
+  //Получение автора
   findAll() {
     const authors = this.authorsRepository.find();
     return authors;
   }
 
-  findBookByAuthor(authorId: number) {
-    const books = this.authorsRepository.find({
+  //Получение книг конкретного автора
+  async findBookByAuthor(authorId: number) {
+    const books = await this.authorsRepository.find({
       where: { id: authorId },
       relations: ['books'],
     });
-    return books;
+
+    return books.length > 0 ? books : 'Автор не найден';
   }
 }
