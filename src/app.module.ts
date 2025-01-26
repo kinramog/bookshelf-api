@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BooksModule } from './books/books.module';
 import { Book } from './books/entities/book.entity';
 import { ConfigModule } from '@nestjs/config';
+import { AuthorsModule } from './authors/authors.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
       autoLoadEntities: true,
     }),
     BooksModule,
+    AuthorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
